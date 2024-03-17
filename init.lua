@@ -91,18 +91,27 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Using this to set expand within brackets
+-- might be a better way with functions but this works for now
+vim.cmd 'let delimitMate_expand_cr = 2'
+
+-- Set highlight on search
+vim.o.hlsearch = false
 -- Make line numbers default
 vim.opt.number = true
+vim.opt.relativenumber = true
 -- You can also add relative line numbers, for help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+
+-- Color column at 80 characters
+vim.o.colorcolumn = '120'
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -125,6 +134,16 @@ vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Smart indent
+vim.o.smartindent = true
+vim.o.cindent = true
+
+-- Other tab settings
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
@@ -142,8 +161,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.list = false
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -190,6 +208,99 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- neo-tree keymaps
+vim.keymap.set('n', '<leader>e', '<Cmd>:Neotree<cr>', { desc = 'Open Neotree' })
+
+-- Fugitive keymaps
+vim.keymap.set('n', '<leader>gs', function()
+  vim.cmd.Git()
+end, { desc = 'Git status (Fugitive)' })
+
+-- Harpoon keymaps
+-- A little bloated, can come back and get it DRY
+vim.keymap.set('n', '<leader>fa', function()
+  require('harpoon.mark').add_file()
+end, { desc = 'Harpoon add file' })
+vim.keymap.set('n', '<leader>m', function()
+  require('harpoon.ui').toggle_quick_menu()
+end, { desc = 'Toggle Harpoon Menu' })
+vim.keymap.set('n', '<leader>j', function()
+  require('harpoon.ui').nav_file(1)
+end, { desc = 'Harpoon File 1' })
+vim.keymap.set('n', '<leader>k', function()
+  require('harpoon.ui').nav_file(2)
+end, { desc = 'Harpoon File 2' })
+vim.keymap.set('n', '<leader>l', function()
+  require('harpoon.ui').nav_file(3)
+end, { desc = 'Harpoon File 3' })
+vim.keymap.set('n', '<leader>;', function()
+  require('harpoon.ui').nav_file(4)
+end, { desc = 'Harpoon File 4' })
+
+-- Move lines around while in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected line(s) up' })
+vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv", { desc = 'Move selected line(s) down' })
+
+-- Git log for a file, adds to quickfix list
+vim.keymap.set('n', '<leader>gl', '<cmd>0Gclog<CR>', { desc = '[G]it [l]og for current file, adds to quickfix' })
+
+-- Gitsigns hunk stage/unstage and reset
+vim.keymap.set({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', { desc = 'Gitsigns [h]unk [s]tage' })
+vim.keymap.set({ 'n', 'v' }, '<leader>hu', ':Gitsigns undo_stage_hunk<CR>', { desc = 'Gitsigns [h]unk [u]nstage' })
+vim.keymap.set({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', { desc = 'Gitsigns [h]unk [r]eset' })
+
+-- Quickfix keymaps
+vim.keymap.set('n', '<leader>qf', function()
+  local qf_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win['quickfix'] == 1 then
+      qf_exists = true
+    end
+  end
+  if qf_exists == true then
+    vim.cmd 'cclose'
+    return
+  end
+  if not vim.tbl_isempty(vim.fn.getqflist()) then
+    vim.cmd 'copen'
+  end
+end, { desc = 'Open [Q]uick[f]ix' })
+
+vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', { desc = '[Q]uickfix [N]ext' })
+vim.keymap.set('n', '<leader>qp', '<cmd>cprevious<CR>', { desc = '[Q]uickfix [P]revious' })
+
+-- Centered page scroll
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Page down, centered cursor' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Page up, centered cursor' })
+
+-- Cycle search terms with cursor centered
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search term with centered cursor' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search term with centered cursor' })
+
+-- Empty register paste
+vim.keymap.set('n', '<leader>p', '"_dP', { desc = '[p]aste, delete to empty register' })
+
+-- Cellular automaton keymaps
+vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>', { desc = 'Cellular Automaton: Make it rain' })
+vim.keymap.set('n', '<leader>gol', '<cmd>CellularAutomaton game_of_life<CR>', { desc = 'Cellular Automaton: Game of Life' })
+
+-- Python if __name__ == '__main__'
+vim.keymap.set('n', '<leader>ma', "iif __name__ == '__main__':<CR>", { desc = 'Python if __name__ == __main__' })
+
+vim.api.nvim_create_user_command('Format', function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ['end'] = { args.line2, end_line:len() },
+    }
+  end
+  require('conform').format { async = true, lsp_fallback = true, range = range }
+end, { range = true })
+
+vim.keymap.set({ 'n', 'v' }, '<leader>ff', ':Format<CR>', { desc = 'Format with Conform' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -227,6 +338,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-fugitive',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -255,7 +367,39 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      on_attach = function(bufnr)
+        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+
+        -- don't override the built-in and fugitive keymaps
+        local gs = package.loaded.gitsigns
+        vim.keymap.set({ 'n', 'v' }, ']c', function()
+          if vim.wo.diff then
+            return ']c'
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
+          return '<Ignore>'
+        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
+        vim.keymap.set({ 'n', 'v' }, '[c', function()
+          if vim.wo.diff then
+            return '[c'
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
+          return '<Ignore>'
+        end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
+      end,
     },
+  },
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    -- Enable `lukas-reineke/indent-blankline.nvim`
+    -- See `:help ibl`
+    main = 'ibl',
+    opts = {},
   },
 
   -- NOTE: Plugins can also be configured to run lua code when they are loaded.
@@ -272,23 +416,6 @@ require('lazy').setup({
   -- Then, because we use the `config` key, the configuration only runs
   -- after the plugin has been loaded:
   --  config = function() ... end
-
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      }
-    end,
-  },
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -369,6 +496,9 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sc', builtin.git_commits, { desc = '[S]earch Git [C]ommits' })
+      vim.keymap.set('n', '<leader>gh', builtin.git_bcommits, { desc = '[S]earch [G]it Buffer [H]istory' })
+      vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Search [G]it [B]ranches' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -539,10 +669,18 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        clangd = {},
+        gleam = {},
+        gopls = {},
+        htmx = {},
+        jsonls = {},
+        pyright = {},
+        ruff_lsp = {},
+        rust_analyzer = {},
+        tsserver = {},
+        yamlls = {},
+        zls = {},
+        html = { filetypes = { 'html', 'twig', 'hbs' } },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -601,8 +739,21 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        -- Customize or remove this keymap to your liking
+        '<leader>ff',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = { 'n', 'v' },
+        desc = 'Format buffer',
+      },
+    },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
@@ -616,7 +767,8 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'ruff_lsp' },
+        go = { 'goimports', 'gofmt' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
@@ -681,9 +833,9 @@ require('lazy').setup({
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-j>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
 
           -- scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -793,7 +945,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'go', 'c', 'html', 'lua', 'markdown', 'python', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -818,6 +970,33 @@ require('lazy').setup({
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
+  },
+
+  -- Treesitter with context
+  'nvim-treesitter/nvim-treesitter-context',
+
+  -- Autocomplete quotes and parenthesis
+  'raimondi/delimitMate',
+
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+  },
+
+  'theprimeagen/harpoon',
+
+  'eandrju/cellular-automaton.nvim',
+
+  {
+    'mfussenegger/nvim-lint',
+    linters_by_ft = {
+      python = { 'ruff' },
+    },
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
