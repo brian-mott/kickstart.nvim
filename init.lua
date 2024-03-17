@@ -399,7 +399,9 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
     main = 'ibl',
-    opts = {},
+    opts = {
+      indent = { char = '┊' },
+    },
   },
 
   -- NOTE: Plugins can also be configured to run lua code when they are loaded.
