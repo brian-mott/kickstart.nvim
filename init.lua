@@ -327,7 +327,7 @@ vim.api.nvim_create_user_command('Format', function(args)
       ['end'] = { args.line2, end_line:len() },
     }
   end
-  require('conform').format { async = true, lsp_fallback = true, range = range }
+  require('conform').format { async = false, lsp_fallback = true, range = range }
 end, { range = true })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>ff', ':Format<CR>', { desc = 'Format with Conform' })
@@ -783,7 +783,7 @@ require('lazy').setup({
         -- Customize or remove this keymap to your liking
         '<leader>ff',
         function()
-          require('conform').format { async = true, lsp_fallback = true }
+          require('conform').format { async = false, lsp_fallback = true }
         end,
         mode = { 'n', 'v' },
         desc = 'Format buffer',
@@ -795,7 +795,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, python = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
