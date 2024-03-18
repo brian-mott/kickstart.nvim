@@ -382,6 +382,7 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+  'ThePrimeagen/git-worktree.nvim',
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
@@ -523,7 +524,8 @@ require('lazy').setup({
       -- Enable telescope extensions, if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-
+      local wtree = require('telescope').load_extension 'git_worktree'
+      --
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
@@ -532,6 +534,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sc', builtin.git_commits, { desc = '[S]earch Git [C]ommits' })
       vim.keymap.set('n', '<leader>gh', builtin.git_bcommits, { desc = '[S]earch [G]it Buffer [H]istory' })
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Search [G]it [B]ranches' })
+      vim.keymap.set('n', '<leader>gw', wtree.git_worktrees, { desc = 'Show [G]it [W]orktrees' })
+      vim.keymap.set('n', '<leader>cw', wtree.create_git_worktree, { desc = '[C]reate [G]it Worktrees' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
