@@ -21,20 +21,9 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
--- neo-tree keymaps
--- vim.keymap.set('n', '<leader>e', '<Cmd>:Neotree<cr>', { desc = 'Open Neotree' })
-
 -- Move lines around while in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected line(s) up' })
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv", { desc = 'Move selected line(s) down' })
-
--- Git log for a file, adds to quickfix list
-vim.keymap.set('n', '<leader>gl', '<cmd>0Gclog<CR>', { desc = '[G]it [l]og for current file, adds to quickfix' })
-
--- Gitsigns hunk stage/unstage and reset
-vim.keymap.set({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', { desc = 'Gitsigns [h]unk [s]tage' })
-vim.keymap.set({ 'n', 'v' }, '<leader>hu', ':Gitsigns undo_stage_hunk<CR>', { desc = 'Gitsigns [h]unk [u]nstage' })
-vim.keymap.set({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', { desc = 'Gitsigns [h]unk [r]eset' })
 
 -- Quickfix keymaps
 vim.keymap.set('n', '<leader>qf', function()
