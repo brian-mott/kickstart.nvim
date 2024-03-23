@@ -290,10 +290,6 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search term with centered c
 -- Empty register paste
 vim.keymap.set('n', '<leader>p', '"_dP', { desc = '[p]aste, delete to empty register' })
 
--- Cellular automaton keymaps
-vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>', { desc = 'Cellular Automaton: Make it rain' })
-vim.keymap.set('n', '<leader>gol', '<cmd>CellularAutomaton game_of_life<CR>', { desc = 'Cellular Automaton: Game of Life' })
-
 -- Python if __name__ == '__main__'
 vim.keymap.set('n', '<leader>ma', "iif __name__ == '__main__':<CR>", { desc = 'Python if __name__ == __main__' })
 
@@ -1006,7 +1002,7 @@ require('lazy').setup({
 
   require 'custom.plugins.harpoon',
 
-  'eandrju/cellular-automaton.nvim',
+  require 'custom.plugins.cellular-automaton',
 
   {
     'mfussenegger/nvim-lint',
