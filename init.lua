@@ -247,27 +247,6 @@ vim.api.nvim_create_user_command('FugitiveFloat', function()
   end
 end, {})
 
--- Harpoon keymaps
--- A little bloated, can come back and get it DRY
-vim.keymap.set('n', '<leader>fa', function()
-  require('harpoon.mark').add_file()
-end, { desc = 'Harpoon add file' })
-vim.keymap.set('n', '<leader>m', function()
-  require('harpoon.ui').toggle_quick_menu()
-end, { desc = 'Toggle Harpoon Menu' })
-vim.keymap.set('n', '<leader>j', function()
-  require('harpoon.ui').nav_file(1)
-end, { desc = 'Harpoon File 1' })
-vim.keymap.set('n', '<leader>k', function()
-  require('harpoon.ui').nav_file(2)
-end, { desc = 'Harpoon File 2' })
-vim.keymap.set('n', '<leader>l', function()
-  require('harpoon.ui').nav_file(3)
-end, { desc = 'Harpoon File 3' })
-vim.keymap.set('n', '<leader>;', function()
-  require('harpoon.ui').nav_file(4)
-end, { desc = 'Harpoon File 4' })
-
 -- Move lines around while in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected line(s) up' })
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv", { desc = 'Move selected line(s) down' })
@@ -1025,7 +1004,7 @@ require('lazy').setup({
     },
   },
 
-  'theprimeagen/harpoon',
+  require 'custom.plugins.harpoon',
 
   'eandrju/cellular-automaton.nvim',
 
