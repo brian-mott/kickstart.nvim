@@ -211,42 +211,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- neo-tree keymaps
 vim.keymap.set('n', '<leader>e', '<Cmd>:Neotree<cr>', { desc = 'Open Neotree' })
 
--- Fugitive keymaps
-vim.keymap.set('n', '<leader>gs', function()
-  vim.cmd 'FugitiveFloat'
-end, { desc = 'Git status - Fugitive Floating window' })
-
--- from here: https://www.reddit.com/r/neovim/comments/1ag5mk3/fugitive_change_window_to_popup/
-vim.api.nvim_create_user_command('FugitiveFloat', function()
-  ui = vim.api.nvim_list_uis()[1]
-
-  local width = math.floor(ui.width * 0.75)
-  local height = math.floor(ui.height * 0.75)
-
-  local win_config = {
-    relative = 'editor',
-    width = width,
-    height = height,
-    col = (ui.width - width) / 2,
-    row = (ui.height - height) / 2,
-    -- style = 'minimal',
-    focusable = true,
-    border = 'rounded',
-  }
-
-  if not fugitive_float_bufnr then
-    fugitive_float_bufnr = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_open_win(fugitive_float_bufnr, true, win_config)
-    vim.cmd ':Gedit :'
-  elseif vim.api.nvim_win_get_buf(0) == fugitive_float_bufnr then
-    vim.api.nvim_command 'hide'
-  else
-    print '1234'
-    vim.api.nvim_open_win(fugitive_float_bufnr, true, win_config)
-    vim.cmd ':Gedit :'
-  end
-end, {})
-
 -- Move lines around while in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected line(s) up' })
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv", { desc = 'Move selected line(s) down' })
@@ -344,8 +308,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-fugitive',
-
+  require 'custom.plugins.fugitive',
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -354,7 +317,6 @@ require('lazy').setup({
   --
   --  This is equivalent to:
   --    require('Comment').setup({})
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
   'ThePrimeagen/git-worktree.nvim',
