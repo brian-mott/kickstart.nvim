@@ -45,14 +45,20 @@ return {
     opts = {
       on_attach = function(bufnr)
         -- Gitsigns hunk stage/unstage and reset
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-        vim.keymap.set('n', '<leader>tb', ':Gitsigns toggle_current_line_blame<CR>', { desc = 'Gitsigns [t]oggle [b]lame' })
-        vim.keymap.set({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', { desc = 'Gitsigns [h]unk [s]tage' })
-        vim.keymap.set({ 'n', 'v' }, '<leader>hu', ':Gitsigns undo_stage_hunk<CR>', { desc = 'Gitsigns [h]unk [u]nstage' })
-        vim.keymap.set({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', { desc = 'Gitsigns [h]unk [r]eset' })
+        local gs = package.loaded.gitsigns
+        vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+        vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'Gitsigns [t]oggle [b]lame' })
+        vim.keymap.set('n', '<leader>hs', gs.stage_hunk, { desc = 'Gitsigns [h]unk [s]tage' })
+        vim.keymap.set('n', '<leader>hr', gs.reset_hunk, { desc = 'Gitsigns [h]unk [r]eset' })
+        vim.keymap.set('v', '<leader>hs', function()
+          gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = 'Gitsigns [h]unk [s]tage' })
+        vim.keymap.set('v', '<leader>hr', function()
+          gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = 'Gitsigns [h]unk [r]eset' })
+        vim.keymap.set({ 'n', 'v' }, '<leader>hu', gs.undo_stage_hunk, { desc = 'Gitsigns [h]unk [u]nstage' })
 
         -- don't override the built-in and fugitive keymaps
-        local gs = package.loaded.gitsigns
         vim.keymap.set({ 'n', 'v' }, ']c', function()
           if vim.wo.diff then
             return ']c'
