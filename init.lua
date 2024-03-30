@@ -240,6 +240,8 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
   'ThePrimeagen/git-worktree.nvim',
 
+  'mbbill/undotree',
+
   -- moved fugitive and gitsigns to import in git-plugins
   require 'custom.plugins.git-plugins',
 
