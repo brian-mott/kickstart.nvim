@@ -51,8 +51,8 @@ vim.keymap.set('n', '<leader>qf', function()
   end
 end, { desc = 'Open [Q]uick[f]ix' })
 
-vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', { desc = '[Q]uickfix [N]ext' })
-vim.keymap.set('n', '<leader>qp', '<cmd>cprevious<CR>', { desc = '[Q]uickfix [P]revious' })
+vim.keymap.set('n', '<leader>jj', '<cmd>cnext<CR>', { desc = '[Q]uickfix [N]ext' })
+vim.keymap.set('n', '<leader>kk', '<cmd>cprevious<CR>', { desc = '[Q]uickfix [P]revious' })
 
 -- Centered page scroll
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Page down, centered cursor' })
