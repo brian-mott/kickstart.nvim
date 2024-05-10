@@ -802,7 +802,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'go', 'c', 'html', 'lua', 'markdown', 'python', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'go', 'c', 'html', 'lua', 'markdown', 'python', 'vim', 'vimdoc', 'zig' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
