@@ -65,8 +65,8 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search term with centered c
 -- Change size of screen splits
 vim.keymap.set('n', '<C-.>', '<C-w>5>', { desc = 'Make horizontal window split bigger' })
 vim.keymap.set('n', '<C-,>', '<C-w>5<', { desc = 'Make horizontal window split smaller' })
-vim.keymap.set('n', '<C-f>', '<C-w>5+', { desc = 'Make vertical window split bigger' })
-vim.keymap.set('n', '<C-s>', '<C-w>5-', { desc = 'Make vertical window split smaller' })
+vim.keymap.set('n', '<C-f>', '<C-w>5+', { desc = 'Make vertical window split bigger/[f]atter' })
+vim.keymap.set('n', '<C-s>', '<C-w>5-', { desc = 'Make vertical window split [s]maller' })
 
 -- Empty register paste
 vim.keymap.set('n', '<leader>p', '"_dP', { desc = '[p]aste, delete to empty register' })
