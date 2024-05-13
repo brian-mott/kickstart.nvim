@@ -62,6 +62,12 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Page up, centered cursor' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search term with centered cursor' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search term with centered cursor' })
 
+-- Change size of screen splits
+vim.keymap.set('n', '<C-.>', '<C-w>5>', { desc = 'Make horizontal window split bigger' })
+vim.keymap.set('n', '<C-,>', '<C-w>5<', { desc = 'Make horizontal window split smaller' })
+vim.keymap.set('n', '<C-f>', '<C-w>5+', { desc = 'Make vertical window split bigger' })
+vim.keymap.set('n', '<C-s>', '<C-w>5-', { desc = 'Make vertical window split smaller' })
+
 -- Empty register paste
 vim.keymap.set('n', '<leader>p', '"_dP', { desc = '[p]aste, delete to empty register' })
 
