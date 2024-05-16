@@ -245,6 +245,9 @@ require('lazy').setup({
   -- moved fugitive and gitsigns to import in git-plugins
   require 'custom.plugins.git-plugins',
 
+  -- oil import
+  require 'custom.plugins.oil',
+
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
