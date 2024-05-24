@@ -544,6 +544,7 @@ require('lazy').setup({
         htmx = {},
         jsonls = {},
         pyright = {},
+        r_language_server = {},
         ruff_lsp = {},
         rust_analyzer = {},
         tsserver = {},
