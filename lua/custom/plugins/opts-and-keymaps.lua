@@ -69,7 +69,7 @@ vim.keymap.set('n', '<C-f>', '<C-w>5+', { desc = 'Make vertical window split big
 vim.keymap.set('n', '<C-s>', '<C-w>5-', { desc = 'Make vertical window split [s]maller' })
 
 -- Empty register paste
-vim.keymap.set('n', '<leader>p', '"_dP', { desc = '[p]aste, delete to empty register' })
+vim.keymap.set('n', '<leader>p', '"0p', { desc = '[p]aste after a delete' })
 
 -- Python if __name__ == '__main__'
 vim.keymap.set('n', '<leader>ma', "iif __name__ == '__main__':<CR>", { desc = 'Python if __name__ == __main__' })
