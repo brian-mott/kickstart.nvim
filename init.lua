@@ -544,7 +544,7 @@ require('lazy').setup({
         jsonls = {},
         pyright = {},
         r_language_server = {},
-        ruff_lsp = {},
+        ruff = {},
         rust_analyzer = {},
         tsserver = {},
         yamlls = {},
@@ -636,7 +636,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'ruff_lsp' },
+        python = { 'ruff' },
         go = { 'goimports', 'gofmt' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
