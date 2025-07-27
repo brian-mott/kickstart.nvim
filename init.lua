@@ -546,7 +546,7 @@ require('lazy').setup({
         r_language_server = {},
         ruff = {},
         rust_analyzer = {},
-        tsserver = {},
+        -- tsserver = {},
         yamlls = {},
         zls = {},
         html = { filetypes = { 'html', 'twig', 'hbs' } },
@@ -842,10 +842,10 @@ require('lazy').setup({
   },
 
   -- Treesitter with context
-  'nvim-treesitter/nvim-treesitter-context',
-
-  -- Autocomplete quotes and parenthesis
-  'raimondi/delimitMate',
+  -- 'nvim-treesitter/nvim-treesitter-context',
+  require 'custom.plugins.treesitter-context',
+    -- Autocomplete quotes and parenthesis
+    'raimondi/delimitMate',
 
   {
     'nvim-neo-tree/neo-tree.nvim',
